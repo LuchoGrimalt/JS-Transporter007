@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!----- Fonts de google: Audiowide y Gruppo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Gruppo&display=swap" rel="stylesheet">
+    <!----- CDN de bootstrap + sweetalert2 + Animate-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!----- Favicon ----->
+    <link rel="shorcut icon" href="./images/car.png">
+    <link rel="stylesheet" href="./css/estilo.css">
+    <script src="./js/main.js"></script>
+    <title>Taller de servicios - Transporter-007</title>
+</head>
+
+<body>
+    <header>
+        <div class="marca">
+            <h1 class="mb-2 text-center">Transporter-007</h1>
+        </div>
+        <h2 id="subtitulo" class="separador">Servicio premium de automóviles en garantía</h2>
+    </header>
+    <main>
+        <form id="formUsuario" class="formIngreso">
+            <label for="user">Ingrese el Nº de sucursal "001" o "002" </label> <br>
+            <input id="user" type="text" placeholder="Nº de Sucursal">
+            <input type="submit" value="Buscar">
+        </form>
+        <br>
+        <div class="servicios">
+            <div id="one" class="card one animate__animated animate__fadeInLeft">
+                <img class="card-img-top">
+                <div class="card-img-overlay">
+                    <h4 class="card-title">1º Service</h4>
+                    <p class="card-text">El primer control - hasta los 15000 Kms.</p>
+                    <a href="#" class="btn">$27500.-</a>
+                </div>
+            </div>
+            <div id="two" class="card two animate__animated animate__fadeIn">
+                <img class="card-img-top">
+                <div class="card-img-overlay">
+                    <h4 class="card-title ">2º Service</h4>
+                    <p class="card-text ">Cambio de fluidos y filtros - entre 15000 y 70000 Kms. </p>
+                    <a href="#" class="btn">$48600.-</a>
+                </div>
+            </div>
+            <div id="three" class="card three animate__animated animate__fadeInRight">
+                <img class="card-img-top">
+                <div class="card-img-overlay">
+                    <h4 class="card-title">3º Service</h4>
+                    <p class="card-text">Distribución - entre 70000 y 100000 Kms. </p>
+                    <a href="#" class="btn">$85100.-</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <section class="listado">
+            <div id="opciones" class="panel"></div>
+            <ul id="clientesEnTaller" class="lista"></ul>
+        </section>
+
+    </main>
+
+    <footer class="font-small">
+        <div class="text-center py-10">
+            © Jorge Luis Grimalt - Javascript 2022
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <script type="text/javascript">
+        emailjs.init('n2Z9IeOGfCfYizFTk')
+    </script>
+</body>
+
+</html>
