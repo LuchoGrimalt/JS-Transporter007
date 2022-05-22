@@ -162,8 +162,6 @@ function ingresarCliente(e) {
 
 
 // Facturación
-
-
 function facturarCliente(cliente) {
     Swal.fire({
         width: 550,
