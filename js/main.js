@@ -7,17 +7,8 @@ class Cliente {
         this.mail = mail;
         this.precio = precio;
     }
-    calcDescuento() {
-        if (this.precio >= 48000) {
-            this.subtotal = this.precio * 0.9;
-        } else {
-            this.subtotal = this.precio;
-        }
-    }
-    calcFinal() {
-        this.total = this.subtotal * 1.21
-    }
 }
+
 
 // Funcion de elección de sucursal
 window.onload = function() {
@@ -56,17 +47,6 @@ function listaClientes(clientes) {
     clientes.forEach(cliente => {
         let li = document.createElement("li");
         li.innerHTML = `✔ Cliente: "${cliente.nombre}" // Vehículo: ${cliente.modelo} // Service de ${cliente.kilometros} Kms. // ${cliente.mail} // precio $${cliente.precio}`;
-        // let li = document.createElement("tabla");
-        // li.innerHTML = `
-        // <table id="test">
-        //     <tbody>
-        //         <tr><td>Foo</td></tr>
-        //     </tbody>
-        //     <tfoot>
-        //         <tr><td>footer information</td></tr>
-        //     </tfoot>
-        // </table>`;
-
         const botonFacturar = document.createElement("button");
         const botonEliminar = document.createElement("button");
         botonFacturar.innerText = "🛒 Facturar ";
@@ -105,7 +85,9 @@ function detalleCliente() {
                         Swal.fire({
                             text: 'Mail enviado al cliente confirmando su ingreso',
                             width: 160,
-                            color: 'grey',
+                            color: 'green',
+                            showConfirmButton: false,
+                            timer: 1200
                         }, 3000);
                     })
                 }, (err) => {
@@ -174,8 +156,67 @@ function ingresarCliente(e) {
         color: '#229452',
         title: 'Vehiculo ingresado correctamente',
         showConfirmButton: false,
-        timer: 1200
+        timer: 1000
     })
+}
+
+
+// Facturación
+
+
+function facturarCliente(cliente) {
+    Swal.fire({
+        width: 550,
+        title: 'Facturación',
+        html: `
+            <form>
+            Cliente: ${cliente.nombre}<br>
+            Subtotal: $${cliente.precio}.-<br>
+                <label for="civil">TIPO DE PAGO: </label>
+                <input type="radio" id="efvo" name="pago">Efectivo
+                <input type="radio" id="tarjeta" name="pago">Tarjeta
+                <input type="radio" id="transfe" name="pago">Transferencia Bancaria <br>
+                <input type="button" value="MOSTRAR PRECIO TOTAL" onClick="calcDescuento(${cliente.precio})">
+            </form> 
+            <div id="final"></div>          
+            `,
+        // consolelog(total),
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Facturar',
+        cancelButtonText: 'Cancelar',
+
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const clientesEnLocalStorage = JSON.parse(localStorage.getItem(sucursal));
+            const nuevoArray = clientesEnLocalStorage.filter(item => item.nombre != cliente.nombre);
+            localStorage.setItem(sucursal, JSON.stringify(nuevoArray));
+            listaClientes(nuevoArray);
+            capacidad -= 1;
+            Swal.fire({
+                text: 'Cliente facturado correctamente.',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+    })
+
+}
+
+// Calculo de descuento e intereses segun tipo de pago
+function calcDescuento(e) {
+    console.log(e);
+    if (document.getElementById('efvo').checked) {
+        total = (e) * 0.9;
+    }
+    if (document.getElementById('tarjeta').checked) {
+        total = (e) * 1.1;
+    }
+    if (document.getElementById('transfe').checked) {
+        total = (e);
+    }
+    document.getElementById("final").innerHTML = `PRECIO FINAL: $${total}`
 }
 
 // Eliminar cliente
@@ -204,46 +245,4 @@ function eliminarCliente(cliente) {
             })
         }
     })
-}
-
-// Facturación
-function facturarCliente(cliente) {
-    Swal.fire({
-        width: 550,
-        title: 'Facturación',
-        html: `
-            <form>
-            Cliente: ${cliente.nombre}<br>
-            Subtotal: $${cliente.precio}.-<br>
-            </form>
-                <div>   
-                    <label for="civil">Tipo de pago: </label>
-                        <input id="efvo"type="checkbox" value="efvo">Efectivo -
-                        <input id="tarjeta" type="checkbox" value="tarjeta">Tarjeta -
-                        <input id="otros" type="checkbox" value="otros">Otro
-            </div>
-            <input type="text" class="form-control" placeholder="cuotas">
-            <input type="text" class="form-control" placeholder="Observaciones">
-            `,
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Facturar',
-        cancelButtonText: 'Cancelar',
-
-    }).then((result) => {
-        if (result.isConfirmed) {
-            const clientesEnLocalStorage = JSON.parse(localStorage.getItem(sucursal));
-            const nuevoArray = clientesEnLocalStorage.filter(item => item.nombre != cliente.nombre);
-            localStorage.setItem(sucursal, JSON.stringify(nuevoArray));
-            listaClientes(nuevoArray);
-            capacidad -= 1;
-            Swal.fire({
-                text: 'Cliente facturado correctamente.',
-                showConfirmButton: false,
-                timer: 1500
-            })
-        }
-    })
-
 }
